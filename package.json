@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "diet-soda-engine": "file:../DietSodaEngine",
+    "diet-soda-engine": "file:../diet-soda-engine-master",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
     "vue-router": "^4.1.6"

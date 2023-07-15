@@ -1,22 +1,19 @@
 <script setup lang="ts">
 import { NProgress } from "naive-ui";
+import type { GOODS_INFO } from "diet-soda-engine";
 
 const props = defineProps<{
-  storeGoods: {
-    key: string;
-    name: string;
-    value: number;
-    capacity: number;
-  }[];
+  storeGoods: GOODS_INFO[];
 }>();
 </script>
 
 <template>
   <div class="container">
     <div :key="item.key" v-for="item in props.storeGoods">
+      <div>{{ item.value }} / {{ item.capacity }}</div>
       <n-progress
         type="line"
-        :percentage="60"
+        :percentage="parseFloat(((item.value / item.capacity) * 100).toFixed(2))"
         :indicator-placement="'inside'"
         processing
       />
