@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-import { darkTheme, NConfigProvider } from 'naive-ui'
+import { RouterLink, RouterView } from "vue-router";
+import { darkTheme, NConfigProvider } from "naive-ui";
 </script>
 
 <template>
@@ -17,9 +17,9 @@ import { darkTheme, NConfigProvider } from 'naive-ui'
         </nav>
       </div> -->
     </header>
-  
+
     <RouterView />
   </n-config-provider>
 </template>
 
-<style scoped lang="less" src="./App.less"></style>
+<!-- <style scoped lang="less" src="./App.less"></style> -->
