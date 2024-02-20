@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
-import { darkTheme, NConfigProvider } from "naive-ui";
+import { darkTheme, NConfigProvider, NGlobalStyle } from "naive-ui";
 </script>
 
 <template>
@@ -19,6 +19,7 @@ import { darkTheme, NConfigProvider } from "naive-ui";
     </header>
 
     <RouterView />
+    <n-global-style />
   </n-config-provider>
 </template>
 

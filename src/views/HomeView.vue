@@ -3,6 +3,8 @@ import { reactive } from "vue";
 import { DietSodaEvent, EVENTS_TYPE, type GOODS_INFO } from "diet-soda-engine";
 import StoreList from "@/components/Store/StoreList.vue";
 import { NGrid, NGi } from "naive-ui";
+import { BUILDING_TYPE_MAP } from "diet-soda-engine";
+import logger from "@/utils/logger";
 
 const state = reactive<{
   storeGoods: GOODS_INFO[];
@@ -11,9 +13,24 @@ const state = reactive<{
 });
 
 DietSodaEvent.subscribe(EVENTS_TYPE.AFTER_UPDATE, (data) => {
-  console.log("event", data);
-  state.storeGoods = data.store;
+  logger.log("AFTER_UPDATE", data);
+  // state.storeGoods = data.store;
 });
+
+const build = () => {
+  logger.log("build");
+
+  DietSodaEvent.emit(EVENTS_TYPE.BUILD, {
+    buildingType: BUILDING_TYPE_MAP.Sawmill,
+    num: 1,
+  });
+};
+
+const devRunTick = () => {
+  logger.log("devRunTick");
+  DietSodaEvent.emit(EVENTS_TYPE.DEV_RUN_TICK);
+};
+
 </script>
 
 <template>
@@ -22,7 +39,8 @@ DietSodaEvent.subscribe(EVENTS_TYPE.AFTER_UPDATE, (data) => {
       <StoreList :storeGoods="state.storeGoods" />
     </n-gi>
     <n-gi :span="2" class="grid-item">
-      <!-- <StoreList :storeGoods="state.storeGoods" /> -->
+      <div @click="devRunTick">跑一帧</div>
+      <div @click="build">建造伐木场</div>
     </n-gi>
     <n-gi :span="1" class="grid-item">
       <!-- <StoreList :storeGoods="state.storeGoods" /> -->
