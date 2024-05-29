@@ -1,21 +1,23 @@
 <script setup lang="ts">
-import { reactive } from "vue";
-import { DietSodaEvent, EVENTS_TYPE, type GOODS_INFO } from "diet-soda-engine";
+import { ref } from "vue";
+import { DietSodaEvent, EVENTS_TYPE, type MANAGERS } from "diet-soda-engine";
 import StoreList from "@/components/Store/StoreList.vue";
 import { NGrid, NGi } from "naive-ui";
 import { BUILDING_TYPE_MAP } from "diet-soda-engine";
 import logger from "@/utils/logger";
 
-const state = reactive<{
-  storeGoods: GOODS_INFO[];
-}>({
-  storeGoods: [],
-});
+const storeGoods = ref([]);
 
-DietSodaEvent.subscribe(EVENTS_TYPE.AFTER_UPDATE, (data) => {
-  logger.log("AFTER_UPDATE", data);
-  // state.storeGoods = data.store;
-});
+DietSodaEvent.subscribe(
+  EVENTS_TYPE.AFTER_UPDATE,
+  (data: { managers: MANAGERS }) => {
+    logger.log("AFTER_UPDATE", data);
+
+    storeGoods.value = data.managers.store.getStoreRenderInfo();
+
+    logger.log("storeGoods", storeGoods.value);
+  }
+);
 
 const build = () => {
   logger.log("build");
@@ -35,15 +37,12 @@ const devRunTick = () => {
 
 <template>
   <n-grid :cols="4" class="gird-container">
-    <n-gi :span="1" class="grid-item">
-      <StoreList :storeGoods="state.storeGoods" />
-    </n-gi>
-    <n-gi :span="2" class="grid-item">
+    <n-gi :span="3" class="grid-item">
       <div @click="devRunTick">跑一帧</div>
       <div @click="build">建造伐木场</div>
     </n-gi>
     <n-gi :span="1" class="grid-item">
-      <!-- <StoreList :storeGoods="state.storeGoods" /> -->
+      <StoreList :storeGoods="storeGoods" />
     </n-gi>
   </n-grid>
 </template>
